@@ -11,7 +11,7 @@ export default () => {
                 </p>
                 <hr className="my-4" />
                 <Link
-                    to="/todo_lists"
+                    to="/todo_lists#index"
                     className="btn btn-lg custom-button"
                     role="button"
                 >
