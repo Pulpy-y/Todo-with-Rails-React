@@ -30,7 +30,11 @@ class TodoLists extends React.Component{
                         <Link to={`/todo_list/${todo_list.id}`} className="card-title">
                             {todo_list.title}
                         </Link>
+                    <div className="card-body">
+                        {todo_list.description}
+                    </div>
                 </div>
+
             </div>
         ));
         const noTodoList = (
