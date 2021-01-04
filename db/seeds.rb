@@ -5,9 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-9.times do |i|
-  TodoList.create(
-    title: "Todo List #{i + 1}",
-    description: 'This is a new list'
-  )
-end
+TodoList.create!(title: "My new test", description: "To test items", todo_items_attributes: [
+  {title: 'Item1', completed: false},
+  {title: 'Item2', completed: true}])
