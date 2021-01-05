@@ -9,7 +9,7 @@ export default (
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/todo_lists" exact component={TodoLists} />
-            <Route path="/todo_list/:id" exact component={TodoList} />
+            <Route path="/todo_list/:id"   component={TodoList} />
         </Switch>
     </Router>
 );

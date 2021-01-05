@@ -10,7 +10,7 @@ class TodoLists extends React.Component{
     }
 
     componentDidMount() {
-        const url = "/api/v1/todo_lists/index";
+        const url = "/api/v1/todo_lists";
         fetch(url)
             .then(response => {
                 if (response.ok){
@@ -23,6 +23,16 @@ class TodoLists extends React.Component{
     }
 
     render(){
+        function renderTodoItems(todo_items, listId){
+            let todoitemPTags=""
+            if(!!todo_items){
+                todo_items.forEach(todo_item =>{
+                    const todoitemP = ` ${todo_item.title}`
+                    todoitemPTags += todoitemP
+                })
+            }
+            return todoitemPTags
+        }
         const { todo_lists } = this.state;
         const allTodoLists = todo_lists.map((todo_list, index) => (
             <div key={index} className="col-md-6 col-lg-4">
@@ -32,6 +42,9 @@ class TodoLists extends React.Component{
                         </Link>
                     <div className="card-body">
                         {todo_list.description}
+                    </div>
+                    <div className ="todo_items">
+                        {renderTodoItems(todo_list.todo_items, todo_list.id)}
                     </div>
                 </div>
 

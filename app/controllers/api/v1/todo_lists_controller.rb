@@ -1,7 +1,8 @@
 class Api::V1::TodoListsController < ApplicationController
   def index
     todo_list = TodoList.all.order(created_at: :desc)
-    render json: todo_list
+    render json: todo_list, include:
+      [:todo_items => {:only => [:id, :title, :completed, :todo_list_id]}]
   end
 
   def create
