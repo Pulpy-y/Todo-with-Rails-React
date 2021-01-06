@@ -22,17 +22,31 @@ class TodoLists extends React.Component{
             .catch(() => this.props.history.push("/"));
     }
 
-    render(){
+    render() {
+
         function renderTodoItems(todo_items, listId){
-            let todoitemPTags=""
             if(!!todo_items){
-                todo_items.forEach(todo_item =>{
-                    const todoitemP = ` ${todo_item.title}`
-                    todoitemPTags += todoitemP
-                })
-            }
-            return todoitemPTags
+                return (
+                    <div >
+                        <ul >
+                            {todo_items.map((todo) => {
+                                return(
+                                    <li className="task"  key={todo.id}>
+                                        <input type="checkbox" />
+                                        <label >{todo.title}</label>
+                                        <span className="deleteTaskBtn">x</span>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                    )
+                }
+
         }
+
+        function createItem(){}
+
         const { todo_lists } = this.state;
         const allTodoLists = todo_lists.map((todo_list, index) => (
             <div key={index} className="col-md-6 col-lg-4">
@@ -46,6 +60,11 @@ class TodoLists extends React.Component{
                     <div className ="todo_items">
                         {renderTodoItems(todo_list.todo_items, todo_list.id)}
                     </div>
+                    <button type="button" className ="add-todo-item" data-todo-list-id={todo_list.id} >
+                        <Link to={`/todo_lists/${todo_list.id}/todo_items`} className="btn custom-button">
+                            +
+                        </Link>
+                    </button>
                 </div>
 
             </div>
@@ -63,7 +82,7 @@ class TodoLists extends React.Component{
                 <div className="py-5">
                     <main className="container">
                         <div className="text-right mb-3">
-                            <Link to="/todo_lists/new" className="btn custom-button">
+                            <Link to="/todo_list" className="btn custom-button">
                                 Create New Todo List
                             </Link>
                         </div>

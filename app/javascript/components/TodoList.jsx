@@ -9,42 +9,13 @@ import TodoLists from "./TodoLists";
 
 class TodoList extends React.Component{
     // todo_list id = {this.props.match.params.id}
-    constructor(props) {
-        super(props);
-        /*this.emptyItem = {
-            title:'',
-            completed:false
-        };
-        this.state = {
-            todo_list: {
-                title: '',
-                description: '',
-                todo_items_attributes: [Object.assign(({}, this.emptyItem))]
-            }
-        };*/
+
+    /*
         const todo_list = {};
         this.state = {
             todo_list
         }
     }
-
-    componentDidMount() {
-        /*const url = `/api/v1/todo_list/${this.props.match.params.id}`;
-        console.log(url);
-        fetch(url)
-            .then(response => {
-                if (response.ok){
-                    return response.json();
-                }
-                throw new Error("Network response was not ok.");
-            })
-            .then(response => this.setState({ todo_list: response.data}))
-            .catch(() => this.props.history.push("/"));*/
-        TodoLists.getTodo(this.props.match.params.id).then((result) => {
-            console.log(result.data);
-            this.setState(() => ({todo_list: result.data}));
-        }).catch(() => this.props.history.push("/"))
-        }
 
 
     render(){
@@ -92,8 +63,17 @@ class TodoList extends React.Component{
 
 
     }
-
-
+    */
+render() {
+    return(
+        <>
+            <h1>You have created list # {this.props.match.params.id}</h1>
+            <Link to="/todo_lists" className="btn btn-link mt-3">
+                Back to lists
+            </Link>
+        </>
+    )
+}
 
 
 }

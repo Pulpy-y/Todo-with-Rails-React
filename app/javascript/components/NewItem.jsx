@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class NewList extends React.Component{
+class NewItem extends React.Component{
 
 
     constructor(props) {
         super(props);
         this.state={
             title: "",
-            description: ""
 
         };
 
@@ -25,15 +24,14 @@ class NewList extends React.Component{
 
     onSubmit(event) {
         event.preventDefault();
-        const url = "/api/v1/todo_lists";
-        const { title, description } = this.state;
+        const url = `/api/v1/todo_lists/${this.props.match.params.todo_list_id}/todo_items`;
+        const { title } = this.state;
 
-        if (title.length == 0 || description.length == 0 )
+        if (title.length == 0)
             return;
 
         const body = {
-            title,
-            description,
+            title
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -51,7 +49,7 @@ class NewList extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(response => this.props.history.push(`/todo_list/${response.id}`))
+            .then(response => this.props.history.push("/todo_lists"))
             .catch(error => console.log(error.message));
     }
 
@@ -61,11 +59,11 @@ class NewList extends React.Component{
                 <div className="row">
                     <div className="col-sm-12 col-lg-6 offset-lg-3">
                         <h1 className="font-weight-normal mb-5">
-                            Add a new todo list.
+                            Add a new todo item.
                         </h1>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="listTitle">List name</label>
+                                <label htmlFor="listTitle">Item title</label>
                                 <input
                                     type="text"
                                     name="title"
@@ -75,20 +73,12 @@ class NewList extends React.Component{
                                     onChange={this.onChange}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="listDescription">Description</label>
-                                <input
-                                    type="text"
-                                    name="description"
-                                    id="listDescription"
-                                    className="form-control"
-                                    required
-                                    onChange={this.onChange}
-                                />
-                            </div>
+
 
                             <button type="submit" className="btn custom-button mt-3">
-                                Create List
+
+                                    Create Item
+
                             </button>
                             <Link to="/todo_lists" className="btn btn-link mt-3">
                                 Back to lists
@@ -103,4 +93,4 @@ class NewList extends React.Component{
 
 }
 
-export default NewList;
+export default NewItem;
