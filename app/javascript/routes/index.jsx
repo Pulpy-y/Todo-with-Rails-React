@@ -12,8 +12,7 @@ export default (
             <Route path="/" exact component={Home} />
             <Route path="/todo_lists" exact component={TodoLists} />
             <Route path="/todo_list" exact component={NewList} />
-            <Route path="/todo_list/:id" exact component={TodoList} />
-            <Route path="/todo_lists/:todo_list_id/todo_items" exact component={NewItem} />
+            <Route path="/todo_lists/:todo_list_id" exact component={NewItem} />
 
         </Switch>
     </Router>

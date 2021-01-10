@@ -12,6 +12,7 @@ class Api::V1::TodoListsController < ApplicationController
     else
       render json: todo_list.errors
     end
+
   end
 
   def show
@@ -23,7 +24,7 @@ class Api::V1::TodoListsController < ApplicationController
   end
 
   def destroy
-    todo_list&.destroy
+    @todo_list.destroy
     render json: { message:'Todo List deleted!'}
   end
 

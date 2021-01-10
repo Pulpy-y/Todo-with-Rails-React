@@ -7,15 +7,13 @@ class Api::V1::TodoItemsController < ApplicationController
     render json: {completed: completed, uncompleted: uncompleted}
   end
 
+  def new
+    @todo_item = @todo_list.todo_items.build
+  end
+
   def create
-    todo_item = @todo_list.todo_items.create(todo_item_params)
-    if todo_item
-      render json: todo_item
-    else
-      render json: todo_item.errors
-    end
-    redirect_to @todo_list
-    #not sure
+    @todo_item = @todo_list.todo_items.create(todo_item_params)
+    render json: todo_item
   end
 
   def show

@@ -22,6 +22,31 @@ class TodoLists extends React.Component{
             .catch(() => this.props.history.push("/"));
     }
 
+    handleDelete(listId){
+        const url = `/api/v1/todo_lists/${listId}`;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-Token": token,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response was not ok.");
+            })
+            .then(() => this.props.history.push("/todo_lists"))
+            .catch(error => console.log(error.message));
+    }
+
+
+
+
+
     render() {
 
         function renderTodoItems(todo_items, listId){
@@ -45,7 +70,7 @@ class TodoLists extends React.Component{
 
         }
 
-        function createItem(){}
+
 
         const { todo_lists } = this.state;
         const allTodoLists = todo_lists.map((todo_list, index) => (
@@ -61,10 +86,15 @@ class TodoLists extends React.Component{
                         {renderTodoItems(todo_list.todo_items, todo_list.id)}
                     </div>
                     <button type="button" className ="add-todo-item" data-todo-list-id={todo_list.id} >
-                        <Link to={`/todo_lists/${todo_list.id}/todo_items`} className="btn custom-button">
+                        <Link to={`/todo_lists/${todo_list.id}`} className="btn custom-button" onClick={this.handleDelete(todo_list.id)}>
                             +
                         </Link>
                     </button>
+                    <div className="col-sm-12 col-lg-2">
+                        <button type="button" className="btn btn-danger" onClick={this.handleDelete(todo_list.id)}>
+                            Delete List
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -72,7 +102,7 @@ class TodoLists extends React.Component{
         const noTodoList = (
             <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
                 <h4>
-                    No todo list yet. Why not <Link to="/new_todo_list">create one</Link>
+                    No todo list yet. Why not <Link to="/todo_list">create one</Link>
                 </h4>
             </div>
         );

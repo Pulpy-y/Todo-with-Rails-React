@@ -7,7 +7,10 @@ class NewItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            title: "",
+            todo_item:{
+                title:"",
+                completed: false
+            }
 
         };
 
@@ -25,13 +28,13 @@ class NewItem extends React.Component{
     onSubmit(event) {
         event.preventDefault();
         const url = `/api/v1/todo_lists/${this.props.match.params.todo_list_id}/todo_items`;
-        const { title } = this.state;
+        const { title, completed} = this.state;
 
         if (title.length == 0)
             return;
 
         const body = {
-            title
+            title, completed
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -63,11 +66,11 @@ class NewItem extends React.Component{
                         </h1>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="listTitle">Item title</label>
+                                <label htmlFor="itemTitle">Item title</label>
                                 <input
                                     type="text"
                                     name="title"
-                                    id="listTitle"
+                                    id="itemTitle"
                                     className="form-control"
                                     required
                                     onChange={this.onChange}

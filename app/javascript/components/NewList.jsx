@@ -51,7 +51,7 @@ class NewList extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(response => this.props.history.push(`/todo_list/${response.id}`))
+            .then(response => this.props.history.push(`/todo_lists`))
             .catch(error => console.log(error.message));
     }
 
