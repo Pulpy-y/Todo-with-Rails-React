@@ -24,8 +24,9 @@ class Api::V1::TodoListsController < ApplicationController
   end
 
   def destroy
-    @todo_list.destroy
+    todo_list&.destroy
     render json: { message:'Todo List deleted!'}
+
   end
 
   def edit

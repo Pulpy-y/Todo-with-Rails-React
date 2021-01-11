@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import TodoList from "./TodoList";
 
 class TodoLists extends React.Component{
     constructor(props) {
@@ -7,6 +8,7 @@ class TodoLists extends React.Component{
         this.state = {
             todo_lists: [[]]
         };
+        this.deleteTodoList = this.deleteTodoList.bind(this)
     }
 
     componentDidMount() {
@@ -22,8 +24,9 @@ class TodoLists extends React.Component{
             .catch(() => this.props.history.push("/"));
     }
 
-    handleDelete(listId){
-        const url = `/api/v1/todo_lists/${listId}`;
+
+    deleteTodoList(id){
+        const url = `/api/v1/todo_lists/${id}`;
         const token = document.querySelector('meta[name="csrf-token"]').content;
 
         fetch(url, {
@@ -39,66 +42,22 @@ class TodoLists extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(() => this.props.history.push("/todo_lists"))
+            .then(()=>this.props.history.push("/delete"))
             .catch(error => console.log(error.message));
     }
 
 
 
-
-
     render() {
-
-        function renderTodoItems(todo_items, listId){
-            if(!!todo_items){
-                return (
-                    <div >
-                        <ul >
-                            {todo_items.map((todo) => {
-                                return(
-                                    <li className="task"  key={todo.id}>
-                                        <input type="checkbox" />
-                                        <label >{todo.title}</label>
-                                        <span className="deleteTaskBtn">x</span>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
-                    )
-                }
-
-        }
 
 
 
         const { todo_lists } = this.state;
-        const allTodoLists = todo_lists.map((todo_list, index) => (
-            <div key={index} className="col-md-6 col-lg-4">
-                <div className="card mb-4">
-                        <Link to={`/todo_list/${todo_list.id}`} className="card-title">
-                            {todo_list.title}
-                        </Link>
-                    <div className="card-body">
-                        {todo_list.description}
-                    </div>
-                    <div className ="todo_items">
-                        {renderTodoItems(todo_list.todo_items, todo_list.id)}
-                    </div>
-                    <button type="button" className ="add-todo-item" data-todo-list-id={todo_list.id} >
-                        <Link to={`/todo_lists/${todo_list.id}`} className="btn custom-button" onClick={this.handleDelete(todo_list.id)}>
-                            +
-                        </Link>
-                    </button>
-                    <div className="col-sm-12 col-lg-2">
-                        <button type="button" className="btn btn-danger" onClick={this.handleDelete(todo_list.id)}>
-                            Delete List
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        ));
+        const allTodoLists =(
+            <TodoList
+                deleteTodoList = {this.deleteTodoList.bind(this)}
+                lists = {todo_lists}
+                /> );
         const noTodoList = (
             <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
                 <h4>
@@ -116,7 +75,7 @@ class TodoLists extends React.Component{
                                 Create New Todo List
                             </Link>
                         </div>
-                        <div className="row">
+                        <div>
                             {todo_lists.length > 0 ? allTodoLists : noTodoList}
                         </div>
                         <Link to="/" className="btn btn-link">
@@ -127,7 +86,7 @@ class TodoLists extends React.Component{
             </>
 
         );
-    }
+    };
 }
 
 export default TodoLists;
