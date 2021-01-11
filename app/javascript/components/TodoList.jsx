@@ -10,28 +10,9 @@ import {Link} from "react-router-dom";
 class TodoList extends React.Component{
 
 
+
     render(){
-        function renderTodoItems(todo_items, listId){
 
-            if(!!todo_items){
-                return (
-                    <div >
-                        <ul >
-                            {todo_items.map((todo) => {
-                                return(
-                                    <li className="task"  key={todo.id}>
-                                        <input type="checkbox" />
-                                        <label >{todo.title}</label>
-                                        <span className="deleteTaskBtn">x</span>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
-                )
-            }
-
-        }
 
      return(
          <ul>
@@ -45,7 +26,19 @@ class TodoList extends React.Component{
                              {list.description}
                          </div>
                          <div className ="todo_items">
-                             {renderTodoItems(list.todo_items, list.id)}
+                             {<div >
+                                 <ul >
+                                     {list.todo_items.map((todo) => {
+                                         return(
+                                             <li className="task"  key={todo.id}>
+                                                 <input type="checkbox" />
+                                                 <label >{todo.title}</label>
+                                                 <button className="deleteTaskBtn" onClick={this.props.deleteTodoItem.bind(null, list.id,todo.id)}>x</button>
+                                             </li>
+                                         )
+                                     })}
+                                 </ul>
+                             </div>}
                          </div>
                          <button type="button" className ="add-todo-item" data-todo-list-id={list.id} >
                              <Link to={`/todo_lists/${list.id}`} className="btn custom-button">

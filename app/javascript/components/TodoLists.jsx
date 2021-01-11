@@ -6,9 +6,10 @@ class TodoLists extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            todo_lists: [[]]
+            todo_lists: {todo_items:[]}
         };
         this.deleteTodoList = this.deleteTodoList.bind(this)
+        this.deleteTodoItem = this.deleteTodoItem.bind(this)
     }
 
     componentDidMount() {
@@ -42,10 +43,32 @@ class TodoLists extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(()=>this.props.history.push("/delete"))
+            .then(()=>this.props.history.push("/deletelist"))
             .catch(error => console.log(error.message));
     }
 
+    deleteTodoItem(listId, itemId){
+        const url = `/api/v1/todo_lists/${listId}/todo_items/${itemId}`;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        console.log(listId);
+        console.log(itemId);
+
+        fetch(url, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-Token": token,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response was not ok.");
+            })
+            .then(()=>this.props.history.push("/deleteitem"))
+            .catch(error => console.log(error.message));
+    }
 
 
     render() {
@@ -56,6 +79,7 @@ class TodoLists extends React.Component{
         const allTodoLists =(
             <TodoList
                 deleteTodoList = {this.deleteTodoList.bind(this)}
+                deleteTodoItem = {this.deleteTodoItem.bind(this)}
                 lists = {todo_lists}
                 /> );
         const noTodoList = (

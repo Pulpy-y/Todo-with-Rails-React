@@ -5,7 +5,8 @@ import TodoLists from "../components/TodoLists";
 import TodoList from "../components/TodoList";
 import NewList from "../components/NewList";
 import NewItem from "../components/NewItem";
-import DeletePage from "../components/DeletePage";
+import DeleteList from "../components/DeleteList";
+import DeleteItem from "../components/DeleteItem";
 
 export default (
     <Router>
@@ -14,7 +15,8 @@ export default (
             <Route path="/todo_lists" exact component={TodoLists} />
             <Route path="/todo_list" exact component={NewList} />
             <Route path="/todo_lists/:todo_list_id" exact component={NewItem} />
-            <Route path="/delete" exact component={DeletePage} />
+            <Route path="/deletelist" exact component={DeleteList} />
+            <Route path="/deleteitem" exact component={DeleteItem} />
 
         </Switch>
     </Router>

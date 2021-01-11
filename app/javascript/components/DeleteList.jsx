@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const DeletePage = () => {
+const DeleteList = () => {
     return (
     <div>
     <h1>You have successfully deleted the todo list!</h1>
@@ -10,4 +10,4 @@ const DeletePage = () => {
     )
 };
 
-export default DeletePage;
+export default DeleteList;
