@@ -35,7 +35,7 @@ class Api::V1::TodoItemsController < ApplicationController
 
   def update
     #written with no confidence
-    if todo_item.update_attributes!(todo_item_params)
+    if todo_item.update!(todo_item_params)
       render json: { message:'Todo Item updated successfully'}
     else
       render json: { message:'An error occurred'}

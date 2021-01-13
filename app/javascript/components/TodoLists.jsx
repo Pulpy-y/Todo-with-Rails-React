@@ -10,6 +10,7 @@ class TodoLists extends React.Component{
         };
         this.deleteTodoList = this.deleteTodoList.bind(this)
         this.deleteTodoItem = this.deleteTodoItem.bind(this)
+        this.updateTodoItem = this. updateTodoItem.bind(this)
     }
 
     componentDidMount() {
@@ -70,6 +71,37 @@ class TodoLists extends React.Component{
             .catch(error => console.log(error.message));
     }
 
+    updateTodoItem = (listId, itemId, itemTitle,itemComplete) =>{
+        const url = `/api/v1/todo_lists/${listId}/todo_items/${itemId}`
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        console.log(listId);
+        console.log(itemId);
+        console.log(itemTitle);
+        console.log(itemComplete);
+
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify({
+                "title": `${itemTitle}`,
+                "completed": `${!itemComplete}`
+            }),
+
+            headers: {
+                "X-CSRF-Token": token,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response was not ok.");
+            })
+            .then(()=>this.props.history.push("/todo_lists"))
+            .catch(error => console.log(error.message));
+
+    }
+
 
     render() {
 
@@ -80,6 +112,7 @@ class TodoLists extends React.Component{
             <TodoList
                 deleteTodoList = {this.deleteTodoList.bind(this)}
                 deleteTodoItem = {this.deleteTodoItem.bind(this)}
+                updateTodoItem = {this.updateTodoItem.bind(this)}
                 lists = {todo_lists}
                 /> );
         const noTodoList = (
