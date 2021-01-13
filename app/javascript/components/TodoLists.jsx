@@ -6,11 +6,14 @@ class TodoLists extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            todo_lists: {todo_items:[]}
+            todo_lists: {todo_items:[]},
         };
         this.deleteTodoList = this.deleteTodoList.bind(this)
         this.deleteTodoItem = this.deleteTodoItem.bind(this)
         this.updateTodoItem = this. updateTodoItem.bind(this)
+        this.createTodoItem = this.createTodoItem.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -102,6 +105,52 @@ class TodoLists extends React.Component{
 
     }
 
+    createTodoItem = (todo, listId) =>{
+        const url = `/api/v1/todo_lists/${listId}/todo_items`
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                "title": `${todo.title}`,
+                "completed": `${todo.completed}`
+            }),
+
+            headers: {
+                "X-CSRF-Token": token,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response was not ok.");
+            })
+            .then(()=>this.props.history.push("/todo_lists"))
+            .catch(error => console.log(error.message));
+
+
+    }
+
+
+    handleChange(e, todo, oldListId) {
+
+        const newListId = e.target.value;
+        console.log(newListId);
+        this.deleteTodoItem(oldListId, todo.id);
+        this.createTodoItem(todo, newListId);
+
+    }
+
+    handleSubmit(event) {
+        alert('Updated!');
+
+    }
+
+
+
+
 
     render() {
 
@@ -113,6 +162,9 @@ class TodoLists extends React.Component{
                 deleteTodoList = {this.deleteTodoList.bind(this)}
                 deleteTodoItem = {this.deleteTodoItem.bind(this)}
                 updateTodoItem = {this.updateTodoItem.bind(this)}
+                createTodoItem = {this.createTodoItem.bind(this)}
+                handleSubmit = {this.handleSubmit.bind(this)}
+                handleChange = {this.handleChange.bind(this)}
                 lists = {todo_lists}
                 /> );
         const noTodoList = (

@@ -1,13 +1,11 @@
 
 import React from 'react'
-
-//import Loader from './Loader';
-//import Pending from './Pending';
-//import Completed from './Completed';
 import {Link} from "react-router-dom";
-//import TodoLists from "./TodoLists";
+
+
 
 class TodoList extends React.Component{
+
 
 
 
@@ -39,6 +37,23 @@ class TodoList extends React.Component{
                                                         checked={todo.completed}/>
                                                  <label >{todo.title}</label>
                                                  <button className="deleteTaskBtn" onClick={this.props.deleteTodoItem.bind(null, list.id, todo.id)}>x</button>
+                                                 <form onSubmit={this.props.handleSubmit.bind(null, todo)}>
+                                                     <label>
+                                                         Change the list for this item:
+                                                         <select
+                                                             onChange={(e) =>this.props.handleChange(e, todo, list.id)}
+                                                         >
+                                                             <option> </option>
+                                                             {this.props.lists.map((list) =>{
+                                                                return <option key = {list.id}
+                                                                               value={list.id}
+                                                                >{list.title}
+                                                                </option>
+                                                             })}
+                                                         </select>
+                                                     </label>
+                                                     <input type="submit" value="Submit" />
+                                                 </form>
                                              </li>
                                          )
                                      })}
