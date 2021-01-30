@@ -15,7 +15,13 @@ class TodoLists extends React.Component{
         this.updateTodoItem = this. updateTodoItem.bind(this)
         this.createTodoItem = this.createTodoItem.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        // this.handleSubmit = this.handleSubmit.bind(this)
+
+
+    }
+
+    refreshPage() {
+        window.location.reload(false);
     }
 
     componentDidMount() {
@@ -49,7 +55,7 @@ class TodoLists extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(()=>this.props.history.push("/deletelist"))
+            .then(()=>this.refreshPage())
             .catch(error => console.log(error.message));
     }
 
@@ -72,7 +78,7 @@ class TodoLists extends React.Component{
                 }
                 throw new Error("Network response was not ok.");
             })
-            .then(()=>this.props.history.push("/deleteitem"))
+            .then(()=>this.refreshPage())
             .catch(error => console.log(error.message));
     }
 
@@ -145,9 +151,11 @@ class TodoLists extends React.Component{
 
     }
 
-    handleSubmit(event) {
+   /* handleSubmit(event) {
         alert('Updated!');
     }
+
+    */
 
 
 
@@ -164,7 +172,7 @@ class TodoLists extends React.Component{
                 deleteTodoItem = {this.deleteTodoItem.bind(this)}
                 updateTodoItem = {this.updateTodoItem.bind(this)}
                 createTodoItem = {this.createTodoItem.bind(this)}
-                handleSubmit = {this.handleSubmit.bind(this)}
+                // handleSubmit = {this.handleSubmit.bind(this)}
                 handleChange = {this.handleChange.bind(this)}
                 lists = {todo_lists}
                 /> );
