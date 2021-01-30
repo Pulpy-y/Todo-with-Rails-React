@@ -40,3 +40,8 @@ li.task:hover .deleteTaskBtn {
     margin-right: 5px;
     cursor: default;
 }
+
+.TodoListItem {
+    paddingRight: 96;
+
+}

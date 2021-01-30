@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import TodoList from "./TodoList";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 class TodoLists extends React.Component{
     constructor(props) {
@@ -145,7 +147,6 @@ class TodoLists extends React.Component{
 
     handleSubmit(event) {
         alert('Updated!');
-
     }
 
 
@@ -179,17 +180,23 @@ class TodoLists extends React.Component{
             <>
                 <div className="py-5">
                     <main className="container">
-                        <div className="text-right mb-3">
+                        <Box p={4}>
+                        <Button>
                             <Link to="/todo_list" className="btn custom-button">
                                 Create New Todo List
                             </Link>
-                        </div>
+                        </Button>
+                        </Box>
                         <div>
                             {todo_lists.length > 0 ? allTodoLists : noTodoList}
                         </div>
-                        <Link to="/" className="btn btn-link">
-                            Home
-                        </Link>
+                        <Box p={4}>
+                        <Button>
+                            <Link to="/" className="btn btn-link">
+                                Home
+                            </Link>
+                        </Button>
+                        </Box>
                     </main>
                 </div>
             </>
