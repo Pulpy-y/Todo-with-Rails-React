@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.12.10",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "@material-ui/icons": "^5.0.0-alpha.23",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
