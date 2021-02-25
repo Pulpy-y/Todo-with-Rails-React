@@ -30,7 +30,9 @@ class TodoLists extends React.Component{
 
     componentDidMount() {
         const url = "/api/v1/todo_lists";
-        fetch(url)
+        fetch(url, {
+            method: "GET"
+        })
             .then(response => {
                 if (response.ok){
                     return response.json();
@@ -40,6 +42,8 @@ class TodoLists extends React.Component{
             .then(response => this.setState({ todo_lists: response}))
             .catch(() => this.props.history.push("/"));
     }
+
+
 
 
     deleteTodoList(id){
